@@ -127,8 +127,9 @@ IncrementLockout(
     // is DA protected or the session is bound to a DA protected entity.
     if(sessionHandle == TPM_RS_PW)
 	{
-	    if(IsDAExempted(handle))
-		return TPM_RC_BAD_AUTH;
+	    if(IsDAExempted(handle)) {
+			return TPM_RC_BAD_AUTH;
+		}
 	}
     else
 	{
@@ -140,10 +141,11 @@ IncrementLockout(
 	    if(session->attributes.isLockoutBound == SET)
 		handle = TPM_RH_LOCKOUT;
 	    if(session->attributes.isDaBound == CLEAR
-	       && (IsDAExempted(handle) || session->attributes.includeAuth == CLEAR))
+	       && (IsDAExempted(handle) || session->attributes.includeAuth == CLEAR)) {
 		// If the handle was changed to TPM_RH_LOCKOUT, this will not return
 		// TPM_RC_BAD_AUTH
-		return TPM_RC_BAD_AUTH;
+			return TPM_RC_BAD_AUTH;
+		}
 	}
     if(handle == TPM_RH_LOCKOUT)
 	{

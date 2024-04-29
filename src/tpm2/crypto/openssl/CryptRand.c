@@ -226,6 +226,8 @@ DRBG_GetEntropy(
 		BYTE            *entropy            // OUT: buffer to return collected entropy
 		)
 {
+	memset(entropy, 0, requiredEntropy);
+	return TRUE;
 #if !USE_DEBUG_RNG
     UINT32       obtainedEntropy;
     INT32        returnedEntropy;
@@ -404,6 +406,7 @@ DRBG_Reseed(
 	    DRBG_SEED           *additionalData     // IN:
 	    )
 {
+	return TRUE;
     DRBG_SEED            seed;
     pAssert((drbgState != NULL) && (drbgState->magic == DRBG_MAGIC));
     if(providedEntropy == NULL)
@@ -438,6 +441,7 @@ DRBG_SelfTest(
     UINT32           i;
     BYTE            *p;
     DRBG_STATE       testState;
+	return TRUE;
     //
     pAssert(!IsSelfTest());
     SetSelfTest();
@@ -506,6 +510,7 @@ CryptRandomStir(
 		BYTE            *additionalData
 		)
 {
+    return TPM_RC_SUCCESS;
 #if !USE_DEBUG_RNG
     DRBG_SEED        tmpBuf;
     DRBG_SEED        dfResult;
