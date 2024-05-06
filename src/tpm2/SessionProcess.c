@@ -128,6 +128,7 @@ IncrementLockout(
     if(sessionHandle == TPM_RS_PW)
 	{
 	    if(IsDAExempted(handle)) {
+			fprintf(stderr, "bad auth! TPM_RS_PW\n");
 			return TPM_RC_BAD_AUTH;
 		}
 	}
@@ -144,6 +145,7 @@ IncrementLockout(
 	       && (IsDAExempted(handle) || session->attributes.includeAuth == CLEAR)) {
 		// If the handle was changed to TPM_RH_LOCKOUT, this will not return
 		// TPM_RC_BAD_AUTH
+			fprintf(stderr, "bad auth! session\n");
 			return TPM_RC_BAD_AUTH;
 		}
 	}

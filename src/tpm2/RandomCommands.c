@@ -76,6 +76,7 @@ TPM2_GetRandom(
     else
 	out->randomBytes.t.size = in->bytesRequested;
     CryptRandomGenerate(out->randomBytes.t.size, out->randomBytes.t.buffer);
+	//memset(out->randomBytes.t.buffer, 0xa5, out->randomBytes.t.size);
     return TPM_RC_SUCCESS;
 }
 #endif // CC_GetRandom

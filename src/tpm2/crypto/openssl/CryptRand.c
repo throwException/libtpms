@@ -510,6 +510,14 @@ CryptRandomStir(
 		BYTE            *additionalData
 		)
 {
+	BYTE values[8] = { 0xF0, 0x9B, 0xAB, 0x22, 0x22, 0xAB, 0x9C, 0x54 };
+    if((additionalDataSize > 0) && (additionalData != NULL))
+	{
+	    memset(drbgDefault.seed.bytes, 0, sizeof(drbgDefault.seed.bytes));
+	    memcpy(drbgDefault.seed.bytes, values,
+		   MIN(additionalDataSize, sizeof(drbgDefault.seed.bytes)));
+	}
+    drbgDefault.reseedCounter = 1;
     return TPM_RC_SUCCESS;
 #if !USE_DEBUG_RNG
     DRBG_SEED        tmpBuf;
